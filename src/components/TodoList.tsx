@@ -1,15 +1,21 @@
 import React from 'react';
-import Store, { StoreProps } from '../store/Store';
+import Store, { StoreProps, Todo } from '../store/Store';
 
 class TodoListComponent extends React.Component<StoreProps> {
-  handleComplete(index: number) {
-    const store = this.props.store;
+  handleComplete = (index: number) => {
+    const { store } = this.props;
     const todos = store.get('todos');
     
     todos[index].complete = !todos[index].complete;
 
     store.set('todos')(todos);
   }
+
+  renderItem = (item: Todo, index: number) =>
+    <li key={index} className={`todo ${item.complete ? 'complete' : ''}`}>
+      {item.text}
+      <input type="checkbox" onClick={() => this.handleComplete(index)}/>
+    </li>;
 
   render() {
     // Get todos from store
@@ -18,14 +24,12 @@ class TodoListComponent extends React.Component<StoreProps> {
 
     return(
       <div>
+        <h1>Todo...</h1>
+        
         <ul className="todos">
-          {todos.map((item, index) =>
-            <li key={index} className={`todo ${item.complete ? 'complete' : ''}`}>
-              {item.text}
-              <input type="checkbox" onClick={() => this.handleComplete(index)}/>
-            </li>
-          )}
+          {todos.map((item, index) => this.renderItem(item, index))}
         </ul>
+
         {allComplete && <h2>All items completed!</h2>}
       </div>
     );

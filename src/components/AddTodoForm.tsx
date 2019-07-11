@@ -6,7 +6,7 @@ class AddTodoFormComponent extends React.Component<StoreProps> {
     text: ''
   }
 
-  handleChange = (event: any) => {
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({text: event.target.value});
   }
 
@@ -27,7 +27,7 @@ class AddTodoFormComponent extends React.Component<StoreProps> {
     return (
       <div>
         <input type="text" value={this.state.text} onChange={this.handleChange}/>
-        <input type="submit" onClick={() => this.handleSubmit(this.state.text)}/>
+        <input type="submit" value="Add" onClick={() => this.handleSubmit(this.state.text)}/>
       </div>
     );
   }
