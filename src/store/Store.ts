@@ -1,26 +1,26 @@
-import { Store, Effects, createConnectedStore } from 'undux';
+import { Store, Effects, createConnectedStore, withReduxDevtools } from 'undux';
 import effects from './Effects';
 
 // Initial state
 const initialState: StoreState = {
   todos: [
     {
-      text: 'Weekly catchup',
+      text: 'Todo 1',
       complete: false,
     },
     {
-      text: 'Demo undux',
+      text: 'Todo 2',
       complete: false,
     },
     {
-      text: 'Finally do an Angular demo one day!!',
+      text: 'Todo 3',
       complete: false,
     }
   ],
   allComplete: false,
 };
 
-export default createConnectedStore(initialState, effects);
+export default createConnectedStore(initialState, s => withReduxDevtools(effects(s)));
 
 export type Todo = {
   text: string;
